@@ -4,14 +4,15 @@ import {
     Button,
     View,
     SafeAreaView,
-    Text,
     Alert,
     Dimensions,
     Pressable,
 } from 'react-native';
+import { Center, Icon, IconButton } from 'native-base';
 import {NativeRouter, Route, Link} from "react-router-native";
-import {Icon} from '@rneui/themed';
 import {Camera, CameraType} from 'expo-camera';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { NativeBaseProvider } from "native-base";
 
 const winWidth = Dimensions.get('window').width,
     winHeight = Dimensions.get('window').height;
@@ -35,18 +36,32 @@ function ViewCamera() {
         return <View/>;
     }
     if (hasPermission === false) {
-        return <Text>No access to camera</Text>;
+        return <></>;
     }
 
     return (
         <Camera style={{flex: 1}} type={type}>
-            <View style={styles.house_button}>
-            <Icon
-                name='house' color='orange' size='40'
-                onPress={() => Alert.alert('Alert Title', 'My Alert Msg')}/>
-            </View>
+                <Center style={{marginTop: 20, borderRadius: 20}} mx={90}>
+                    <IconButton onPress={() => Alert.alert('Bonjour!', 'SALUT')} icon={<Icon as={Ionicons} name="home" />} borderRadius="full" _icon={{
+      color: "orange.500",
+      size: "xl"
+    }} _hover={{
+      bg: "orange.600:alpha.20"
+    }} _pressed={{
+      bg: "orange.600:alpha.20",
+      _ios: {
+        _icon: {
+          size: "2xl"
+        }
+      }
+    }} _ios={{
+      _icon: {
+        size: "2xl"
+      }
+    }} />
+                </Center>
             <View style={styles.cam_button}>
-                <Button title={"CHANGE CAMERA"} color={'black'}
+                <Button title="CHANGE CAMERA" color="black"
                         onPress={toggleCameraType}>
                 </Button>
             </View>
@@ -56,12 +71,14 @@ function ViewCamera() {
 
 export default function App() {
     return (
+        <NativeBaseProvider>
         <SafeAreaView style={styles.container}>
             <View style={{flex: 1}}>
                 <ViewCamera>
                 </ViewCamera>
             </View>
         </SafeAreaView>
+        </NativeBaseProvider>
     );
 }
 
@@ -69,28 +86,28 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: "center",
         marginHorizontal: 0,
         padding: 2,
         backgroundColor: "black",
     },
     cam_button: {
         borderRadius: 20,
-        position: 'absolute',
+        position: "absolute",
         bottom: 50,
         width: winWidth * 0.5,
         height: winHeight * 0.05,
-        alignSelf: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'orange',
+        alignSelf: "center",
+        justifyContent: "center",
+        backgroundColor: "orange",
     },
     house_button: {
         borderRadius: 30,
-        margin: 15,
+        margin: 40,
         width: winWidth * 0.15,
         height: winWidth * 0.15,
-        alignSelf: 'flex-end',
-        justifyContent: 'center',
-        backgroundColor: 'white',
+        alignSelf: "flex-end",
+        justifyContent: "center",
+        backgroundColor: "white",
     },
 });
